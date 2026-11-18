@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymbiBridge AI - المرافق الذكي لمرضى سيمبيكورت | AstraZeneca</title>
+    <!-- خطوط عربية رسمية وحديثة -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['IBM Plex Sans Arabic', 'sans-serif'],
+                        display: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        azBurgundy: '#830051',   // أرجواني أسترازينيكا الرسمي
+                        azBurgundyDark: '#5E003A',
+                        azGold: '#F0AB00',       // ذهبي أسترازينيكا الرسمي
+                        azNavy: '#002D72',       // أزرق طبي عميق
+                        azSlate: '#F8FAFC',
+                        turbuhalerRed: '#D32F2F'  // أحمر قاعدة التربوهيلر
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background-color: #F4F6F9;
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Cairo', sans-serif;
+        }
+        /* إخفاء شريط التمرير مع الحفاظ على التمرير السلس */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* موجات صوتية متحركة لزر الطكة */
+        @keyframes waveBar {
+            0%, 100% { height: 6px; }
+            50% { height: 22px; }
+        }
+        .wave-active .wave-bar:nth-child(1) { animation: waveBar 0.45s ease-in-out infinite 0.0s; }
+        .wave-active .wave-bar:nth-child(2) { animation: waveBar 0.45s ease-in-out infinite 0.1s; }
+        .wave-active .wave-bar:nth-child(3) { animation: waveBar 0.45s ease-in-out infinite 0.2s; }
+        .wave-active .wave-bar:nth-child(4) { animation: waveBar 0.45s ease-in-out infinite 0.15s; }
+        .wave-active .wave-bar:nth-child(5) { animation: waveBar 0.45s ease-in-out infinite 0.05s; }
+
+        /* نقاط الكتابة للمساعد الذكي */
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen w-full flex flex-col bg-[#F4F6F9] text-slate-800 selection:bg-azBurgundy selection:text-white">
+
+    <!-- ==================== الشريط العلوي الرسمي (Full-Width Official Header) ==================== -->
+    <header class="w-full bg-gradient-to-l from-azBurgundy via-[#6F0044] to-azBurgundyDark text-white shadow-lg sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <!-- الهوية والشعار -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/15 backdrop-blur-md border border-white/25 flex items-center justify-center shadow-inner">
+                    <svg class="w-6 h-6 sm:w-7 sm:h-7 text-azGold" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-display font-extrabold text-lg sm:text-2xl tracking-tight leading-none">SymbiBridge AI</h1>
+                        <span class="text-[10px] sm:text-xs font-bold bg-azGold text-slate-900 px-2 py-0.5 rounded-full">AstraZeneca</span>
+                    </div>
+                    <p class="text-[11px] sm:text-xs text-pink-100/90 mt-0.5">المنصة الذكية للتثقيف الصحي لمستخدمي Symbicort® Turbuhaler®</p>
+                </div>
+            </div>
+
+            <!-- شريط التنقل للشاشات المتوسطة والكبيرة (Desktop / iPad Navigation) -->
+            <nav class="hidden md:flex items-center gap-1.5 bg-black/20 p-1.5 rounded-2xl border border-white/10">
+                <button onclick="switchTab('home')" id="top-nav-home" class="top-nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-white text-azBurgundy shadow-sm transition">
+                    الرئيسية
+                </button>
+                <button onclick="switchTab('guide')" id="top-nav-guide" class="top-nav-btn px-4 py-2 rounded-xl text-sm font-semibold text-pink-100 hover:bg-white/10 transition">
+                    طريقة الاستخدام
+                </button>
+                <button onclick="switchTab('chat')" id="top-nav-chat" class="top-nav-btn px-4 py-2 rounded-xl text-sm font-semibold text-pink-100 hover:bg-white/10 transition">
+                    المساعد الذكي (AI)
+                </button>
+                <button onclick="switchTab('tracker')" id="top-nav-tracker" class="top-nav-btn px-4 py-2 rounded-xl text-sm font-semibold text-pink-100 hover:bg-white/10 transition">
+                    مراقب الجرعات
+                </button>
+            </nav>
+
+            <!-- زر تبديل الأسلوب اللغوي (عراقي مبسط / فصحى رسمية) -->
+            <div class="flex items-center gap-2">
+                <button onclick="toggleDialect()" class="bg-white/15 hover:bg-white/25 active:scale-95 transition px-3 py-2 rounded-xl border border-white/20 text-xs font-semibold flex items-center gap-1.5">
+                    <span>🇮🇶</span>
+                    <span id="dialect-label">أسلوب عراقي مبسط</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== المحتوى الرئيسي بعرض الشاشة الكامل (Full-Screen Content) ==================== -->
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8 pb-24 md:pb-10">
+
+        <!-- ==================== 1. تبويب الرئيسية (Home Dashboard) ==================== -->
+        <section id="tab-home" class="space-y-6">
+            
+            <!-- بطاقة الترحيب الرسمية الكبيرة -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 relative overflow-hidden">
+                <div class="absolute left-0 top-0 bottom-0 w-2 bg-gradient-to-b from-azBurgundy to-azGold"></div>
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                    <div class="space-y-2 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 bg-pink-50 text-azBurgundy px-3 py-1 rounded-full text-xs font-bold border border-pink-100">
+                            <span class="w-2 h-2 rounded-full bg-azBurgundy animate-pulse"></span>
+                            نظام الرعاية الموجهة • خطة SMART العلاجية
+                        </div>
+                        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                            مرحباً صديقي 👋
+                        </h2>
+                        <p id="greeting-subtitle" class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                            رفيقك الذكي للتحكم بالربو واستخدام بخاخ <strong>سيمبيكورت تربوهيلر</strong> بأمان ودقة، لضمان تنفس مريح وحياة طبيعية كل يوم.
+                        </p>
+                    </div>
+
+                    <!-- ملخص الحالة السريع (Quick Status Cards) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 shrink-0">
+                        <div class="bg-slate-50 border border-slate-200/70 rounded-2xl p-4 text-center">
+                            <span class="text-xs text-slate-500 block">الجرعات المتبقية</span>
+                            <div class="flex items-baseline justify-center gap-1 mt-1">
+                                <span id="home-dose-count" class="text-2xl sm:text-3xl font-extrabold text-azBurgundy">105</span>
+                                <span class="text-xs text-slate-400">/ 120</span>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 border border-slate-200/70 rounded-2xl p-4 text-center">
+                            <span class="text-xs text-slate-500 block">الجرعة القادمة</span>
+                            <span class="text-lg sm:text-xl font-extrabold text-slate-800 block mt-1.5">9:00 م</span>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 flex items-center justify-center">
+                            <button onclick="logDose()" class="w-full h-full min-h-[68px] bg-azBurgundy hover:bg-azBurgundyDark active:scale-95 text-white font-bold text-sm px-5 py-3 rounded-2xl shadow-md transition flex flex-col items-center justify-center gap-1">
+                                <span>✓ تسجيل جرعة الآن</span>
+                                <span class="text-[11px] text-pink-200 font-normal">مع تذكير المضمضة</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- شبكة البطاقات التفاعلية الرئيسية (3 أعمدة على الشاشات الكبيرة) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- البطاقة 1: مختبر صوت الطكة التفاعلي (Interactive Click Sound Card) -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-azBurgundy bg-pink-50 px-3 py-1 rounded-full">التقنية الصحيحة</span>
+                            <span class="text-xs text-slate-400 font-semibold">Turbuhaler®</span>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-slate-900">اسمع صوت "الطكة" الصحيح</h3>
+                        <p id="home-click-desc" class="text-sm text-slate-600 mt-2 leading-relaxed">
+                            عند تدوير القاعدة الحمراء يميناً ثم يساراً ستسمع صوت نقرة ميكانيكية واضحة. <strong>عدم شعورك بطعم البودرة أمر طبيعي تماماً</strong> لأن الجرعة دقيقة جداً.
+                        </p>
+                    </div>
+
+                    <div class="mt-6 bg-slate-50 rounded-2xl p-4 border border-slate-200/70 flex items-center gap-4">
+                        <!-- رسم توضيحي للبخاخ -->
+                        <div class="w-16 h-24 shrink-0 bg-white rounded-xl border border-slate-200 flex items-center justify-center p-1 shadow-xs">
+                            <svg viewBox="0 0 80 120" class="w-full h-full">
+                                <rect x="24" y="15" width="32" height="75" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+                                <path d="M28 15 L31 6 L49 6 L52 15 Z" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+                                <rect x="33" y="45" width="14" height="10" rx="2" fill="#E2E8F0"/>
+                                <text x="40" y="53" font-size="6" text-anchor="middle" fill="#1E293B" font-weight="bold">105</text>
+                                <rect x="22" y="90" width="36" height="18" rx="4" fill="#D32F2F"/>
+                                <path d="M12 99 C12 93, 18 93, 18 99" fill="none" stroke="#830051" stroke-width="2.2" stroke-linecap="round"/>
+                                <path d="M68 99 C68 93, 62 93, 62 99" fill="none" stroke="#830051" stroke-width="2.2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+
+                        <div class="flex-1 space-y-2.5">
+                            <!-- مؤشر الموجات الصوتية -->
+                            <div id="sound-wave-box" class="h-7 flex items-center justify-center gap-1.5 bg-white rounded-xl border border-slate-200/80 px-3">
+                                <span class="wave-bar w-1.5 h-1.5 bg-azBurgundy rounded-full transition-all"></span>
+                                <span class="wave-bar w-1.5 h-1.5 bg-azGold rounded-full transition-all"></span>
+                                <span class="wave-bar w-1.5 h-1.5 bg-azBurgundy rounded-full transition-all"></span>
+                                <span class="wave-bar w-1.5 h-1.5 bg-azGold rounded-full transition-all"></span>
+                                <span class="wave-bar w-1.5 h-1.5 bg-azBurgundy rounded-full transition-all"></span>
+                                <span id="wave-status-text" class="text-[11px] text-slate-500 mr-2 font-medium">اضغط للاستماع</span>
+                            </div>
+
+                            <button onclick="playTurbuhalerClick()" class="w-full bg-azBurgundy hover:bg-azBurgundyDark active:scale-95 text-white text-xs sm:text-sm font-bold py-2.5 px-4 rounded-xl shadow-sm transition flex items-center justify-center gap-2">
+                                <span>🔊</span>
+                                <span>تشغيل صوت الطكة</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- البطاقة 2: دليل الخطوات الخمس (5-Step Guide Card) -->
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200/60">دليل مصور</span>
+                            <span class="text-xs text-slate-400 font-semibold">5 خطوات</span>
+                        </div>
+                        <h3 class="text-xl font-extrabold text-slate-900">طريقة الاستخدام الصحيحة</h3>
+                        <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+                            اتبع الخطوات الخمس المبسطة لضمان وصول الدواء بفعالية كاملة إلى الشعب الهوائية وتجنب أي تهيج في الفم.
+                        </p>
+
+                        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-700">
+                            <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-pink-50 text-azBurgundy font-bold flex items-center justify-center text-xs">1</span> افتح الغطاء الأبيض الخارجي</li>
+                            <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-pink-50 text-azBurgundy font-bold flex items-center justify-center text-xs">2</span> أدر القاعدة الحمراء حتى تسمع "طكة"</li>
+                            <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-pink-50 text-azBurgundy font-bold flex items-center justify-center text-xs">3</span> أخرج الزفير بعيداً عن البخاخ</li>
+                            <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-pink-50 text-azBurgundy font-bold flex items-center justify-center text-xs">4</span> اسحب نفساً عميقاً وسريعاً</li>
+                            <li class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-pink-50 text-azBurgundy font-bold flex items-center justify-center text-xs">5</span> تمضمض بالماء جيداً وابصقه</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="switchTab('guide')" class="mt-6 w-full bg-slate-900 hover:bg-slate-800 active:scale-95 text-white text-sm font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2">
+                        <span>فتح الدليل التفاعلي المصور</span>
+                        <span>←</span>
+                    </button>
+                </div>
+
+                <!-- البطاقة 3: المساعد الطبي الذكي (AI Medical Assistant Card) -->
+                <div class="bg-gradient-to-br from-azNavy via-[#00398F] to-[#001F52] text-white rounded-3xl p-6 shadow-md flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute -left-10 -bottom-10 w-40 h-40 rounded-full bg-white/5 pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold bg-white/15 px-3 py-1 rounded-full border border-white/20">مدعوم بالذكاء الاصطناعي</span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        </div>
+                        <h3 class="text-xl font-extrabold">المساعد الطبي الذكي</h3>
+                        <p id="home-ai-desc" class="text-sm text-blue-100 mt-2 leading-relaxed">
+                            هل لديك استفسار حول الكورتيزون الموضعي، الإدمان، نسيان الجرعة، أو خطة SMART؟ اسأل المساعد العلمي المعتمد واحصل على إجابة فورية ومطمئنة.
+                        </p>
+
+                        <div class="mt-4 space-y-2">
+                            <button onclick="openChatWithQuestion('هل بخاخ سيمبيكورت يسبب الإدمان؟')" class="w-full text-right text-xs bg-white/10 hover:bg-white/20 transition px-3.5 py-2.5 rounded-xl border border-white/15 flex items-center justify-between">
+                                <span>"هل بخاخ سيمبيكورت يسبب الإدمان؟"</span>
+                                <span>←</span>
+                            </button>
+                            <button onclick="openChatWithQuestion('هل الكورتيزون بالبخاخ يزيد الوزن؟')" class="w-full text-right text-xs bg-white/10 hover:bg-white/20 transition px-3.5 py-2.5 rounded-xl border border-white/15 flex items-center justify-between">
+                                <span>"هل الكورتيزون بالبخاخ يزيد الوزن؟"</span>
+                                <span>←</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button onclick="switchTab('chat')" class="relative z-10 mt-6 w-full bg-azGold hover:bg-amber-400 active:scale-95 text-slate-950 text-sm font-extrabold py-3 px-4 rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                        <span>بدء محادثة مع المساعد الذكي</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================== 2. تبويب طريقة الاستخدام (Step-by-Step Interactive Guide) ==================== -->
+        <section id="tab-guide" class="hidden max-w-4xl mx-auto space-y-6">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900">الدليل التفاعلي لاستخدام Symbicort® Turbuhaler®</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 mt-1">تنقل بين الخطوات الخمس وتأكد من تطبيقها بدقة</p>
+                    </div>
+                    <span id="step-indicator" class="self-start sm:self-auto text-xs font-bold bg-pink-50 text-azBurgundy px-3.5 py-1.5 rounded-full border border-pink-100">
+                        خطوة 1 من 5
+                    </span>
+                </div>
+
+                <!-- شريط مؤشر الخطوات -->
+                <div class="grid grid-cols-5 gap-2 mb-6">
+                    <button onclick="goToStep(0)" class="step-dot h-2.5 rounded-full bg-azBurgundy transition-all"></button>
+                    <button onclick="goToStep(1)" class="step-dot h-2.5 rounded-full bg-slate-200 transition-all"></button>
+                    <button onclick="goToStep(2)" class="step-dot h-2.5 rounded-full bg-slate-200 transition-all"></button>
+                    <button onclick="goToStep(3)" class="step-dot h-2.5 rounded-full bg-slate-200 transition-all"></button>
+                    <button onclick="goToStep(4)" class="step-dot h-2.5 rounded-full bg-slate-200 transition-all"></button>
+                </div>
+
+                <!-- محتوى الخطوة الحالية -->
+                <div class="bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200/80 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div id="step-illustration" class="w-48 h-52 sm:w-56 sm:h-60 mx-auto bg-white rounded-3xl shadow-sm border border-slate-200/70 flex items-center justify-center p-4">
+                        <!-- رسم SVG متغير -->
+                    </div>
+
+                    <div class="space-y-4 text-center md:text-right">
+                        <h3 id="step-title" class="text-xl sm:text-2xl font-extrabold text-slate-900">1. افتح الغطاء الأبيض</h3>
+                        <p id="step-desc" class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                            أدر الغطاء الأبيض الخارجي وارفعه للأعلى لتظهر فوهة البخاخ.
+                        </p>
+
+                        <!-- منطقة الزر التفاعلي الإضافي للخطوة -->
+                        <div id="step-action-area" class="pt-1"></div>
+
+                        <!-- قائمة تحقق تفاعلية للمريض -->
+                        <label class="inline-flex items-center gap-2.5 cursor-pointer bg-white px-4 py-2.5 rounded-xl border border-slate-200 shadow-xs mt-2">
+                            <input type="checkbox" id="step-check" onchange="toggleStepCheck(this.checked)" class="w-4 h-4 accent-azBurgundy rounded">
+                            <span class="text-xs sm:text-sm font-semibold text-slate-700">فهمت هذه الخطوة وطبقّتها بشكل صحيح</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- أزرار التنقل بين الخطوات -->
+                <div class="flex items-center justify-between gap-4 mt-6">
+                    <button onclick="prevStep()" id="btn-prev-step" class="px-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-bold text-sm hover:bg-slate-50 disabled:opacity-40 transition">
+                        → الخطوة السابقة
+                    </button>
+                    <button onclick="nextStep()" id="btn-next-step" class="px-8 py-3 rounded-xl bg-azBurgundy hover:bg-azBurgundyDark text-white font-bold text-sm shadow-sm transition">
+                        الخطوة التالية ←
+                    </button>
+                </div>
+            </div>
+
+            <!-- تنبيه ذهبي مهم -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 sm:p-5 flex items-start gap-3.5">
+                <span class="text-2xl">⚠️</span>
+                <div>
+                    <h4 class="font-bold text-amber-950 text-sm">تنبيه مهم جداً للحفاظ على فعالية البخاخ:</h4>
+                    <p id="guide-golden-tip" class="text-xs sm:text-sm text-amber-900 mt-1 leading-relaxed">
+                        لا تقم بهزّ البخاخ قبل الاستخدام، ولا تنفخ أبداً داخل الفوهة لأن رطوبة النفس تسبب تكتل البودرة الجافة وتمنع خروج الجرعة بشكل سليم.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== 3. تبويب المساعد الذكي (Gemini AI Medical Assistant) ==================== -->
+        <section id="tab-chat" class="hidden max-w-4xl mx-auto">
+            <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 flex flex-col h-[calc(100vh-175px)] sm:h-[calc(100vh-160px)] min-h-[500px] overflow-hidden">
+                
+                <!-- رأس المحادثة -->
+                <div class="bg-slate-50 px-5 py-3.5 border-b border-slate-200/80 flex items-center justify-between shrink-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-azBurgundy text-white flex items-center justify-center font-bold text-sm shadow-xs">AI</div>
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-sm sm:text-base">المساعد العلمي المعتمد لسيمبيكورت</h3>
+                            <p class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> متصل وجاهز للإجابة على استفساراتك
+                            </p>
+                        </div>
+                    </div>
+                    <button onclick="clearChat()" class="text-xs text-slate-500 hover:text-azBurgundy font-semibold px-3 py-1.5 rounded-lg hover:bg-slate-200/50 transition">
+                        مسح المحادثة
+                    </button>
+                </div>
+
+                <!-- منطقة الرسائل -->
+                <div id="chat-messages" class="flex-1 overflow-y-auto no-scrollbar p-4 sm:p-6 space-y-4 bg-[#F8FAFC]">
+                    <div class="flex items-start gap-3">
+                        <div class="w-9 h-9 rounded-full bg-azBurgundy text-white flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                        <div class="bg-white border border-slate-200/90 rounded-2xl rounded-tr-none p-4 text-xs sm:text-sm text-slate-700 leading-relaxed shadow-xs max-w-[85%]">
+                            مرحباً صديقي! 👋 أنا مساعدك العلمي المخصص لبخاخ <strong>سيمبيكورت تربوهيلر</strong> من أسترازينيكا. يمكنك سؤالي عن أي شيء يخص طريقة الاستخدام، الكورتيزون الموضعي، خطة SMART، أو مواعيد الجرعات، وسأجيبك بكل وضوح واطمئنان.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- أسئلة سريعة مقترحة بضغطة واحدة (Quick Chips) -->
+                <div class="px-4 py-3 bg-white border-t border-slate-100 shrink-0">
+                    <p class="text-[11px] text-slate-400 mb-2 font-semibold">أسئلة شائعة (اضغط للتجربة الفورية):</p>
+                    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+                        <button onclick="askPresetQuestion('هل بخاخ سيمبيكورت يسبب الإدمان؟')" class="whitespace-nowrap text-xs bg-pink-50 hover:bg-pink-100 text-azBurgundy font-semibold px-3 py-1.5 rounded-full border border-pink-100 transition">
+                            هل بخاخ سيمبيكورت يسبب الإدمان؟
+                        </button>
+                        <button onclick="askPresetQuestion('هل الكورتيزون بالبخاخ يزيد الوزن؟')" class="whitespace-nowrap text-xs bg-pink-50 hover:bg-pink-100 text-azBurgundy font-semibold px-3 py-1.5 rounded-full border border-pink-100 transition">
+                            هل الكورتيزون بالبخاخ يزيد الوزن؟
+                        </button>
+                        <button onclick="askPresetQuestion('ما أحس بطعم الدواء بحلقي، هل البخاخ يشتغل؟')" class="whitespace-nowrap text-xs bg-pink-50 hover:bg-pink-100 text-azBurgundy font-semibold px-3 py-1.5 rounded-full border border-pink-100 transition">
+                            ما أحس بطعم الدواء بحلقي!
+                        </button>
+                        <button onclick="askPresetQuestion('شنو فائدة المضمضة بعد البخاخ؟')" class="whitespace-nowrap text-xs bg-pink-50 hover:bg-pink-100 text-azBurgundy font-semibold px-3 py-1.5 rounded-full border border-pink-100 transition">
+                            شنو فائدة المضمضة بعد البخاخ؟
+                        </button>
+                        <button onclick="askPresetQuestion('نسيت آخذ جرعتي، شسوي؟')" class="whitespace-nowrap text-xs bg-pink-50 hover:bg-pink-100 text-azBurgundy font-semibold px-3 py-1.5 rounded-full border border-pink-100 transition">
+                            نسيت آخذ جرعتي، شسوي؟
+                        </button>
+                    </div>
+                </div>
+
+                <!-- مربع الإدخال -->
+                <form onsubmit="handleChatSubmit(event)" class="p-3 sm:p-4 bg-white border-t border-slate-200/80 flex items-center gap-2.5 shrink-0">
+                    <input type="text" id="chat-input" placeholder="اكتب سؤالك الطبي هنا..." class="flex-1 bg-slate-100 text-slate-900 text-xs sm:text-sm rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-azBurgundy/30" autocomplete="off">
+                    <button type="submit" class="bg-azBurgundy hover:bg-azBurgundyDark active:scale-95 text-white px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition flex items-center gap-1.5 shrink-0 shadow-xs">
+                        <span>إرسال</span>
+                        <svg class="w-4 h-4 rotate-180" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ==================== 4. تبويب مراقب الجرعات (Smart Dose & Refill Tracker) ==================== -->
+        <section id="tab-tracker" class="hidden max-w-5xl mx-auto space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- بطاقة العداد البصري للعبوة -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 text-center flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-xs font-bold text-azBurgundy bg-pink-50 px-3 py-1 rounded-full">مراقب العبوة الذكي</span>
+                            <span id="tracker-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">العبوة بحالة ممتازة</span>
+                        </div>
+
+                        <div class="relative w-44 h-44 mx-auto my-5 flex items-center justify-center">
+                            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="42" fill="none" stroke="#E2E8F0" stroke-width="9"/>
+                                <circle id="tracker-ring" cx="50" cy="50" r="42" fill="none" stroke="#10B981" stroke-width="9" stroke-dasharray="264" stroke-dashoffset="33" stroke-linecap="round" class="transition-all duration-500"/>
+                            </svg>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                <span id="tracker-count" class="text-4xl font-extrabold text-slate-900">105</span>
+                                <span class="text-xs text-slate-400 font-medium mt-0.5">جرعة متبقية من 120</span>
+                            </div>
+                        </div>
+
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            عند وصول العداد إلى <strong>20 جرعة</strong>، يظهر المؤشر الأحمر لتنبيهك بشراء عبوة جديدة قبل نفاد الدواء.
+                        </p>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <button onclick="logDose(false)" class="bg-azBurgundy hover:bg-azBurgundyDark active:scale-95 text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-sm transition">
+                                + تسجيل جرعة وقائية
+                            </button>
+                            <button onclick="logDose(true)" class="bg-azNavy hover:bg-blue-900 active:scale-95 text-white font-bold text-xs sm:text-sm py-3.5 px-4 rounded-xl shadow-sm transition">
+                                + جرعة إسعافية (SMART)
+                            </button>
+                        </div>
+
+                        <!-- أدوات محاكاة للعرض التقديمي أمام الأطباء والإدارة -->
+                        <div class="pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <span class="text-slate-400 font-medium">أدوات العرض التقديمي:</span>
+                            <div class="flex items-center gap-3">
+                                <button onclick="simulateLowDoses()" class="text-turbuhalerRed font-bold hover:underline">
+                                    محاكاة قرب النفاد (18 جرعة)
+                                </button>
+                                <span class="text-slate-300">|</span>
+                                <button onclick="resetDoses()" class="text-slate-600 font-bold hover:underline">
+                                    إعادة ضبط (120)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- بطاقة جدول التذكيرات وسجل الجرعات -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <h3 class="text-lg sm:text-xl font-extrabold text-slate-900">جدول التذكيرات اليومي</h3>
+                        
+                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200/70">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">☀️</span>
+                                <div>
+                                    <p class="text-sm font-bold text-slate-900">الجرعة الصباحية</p>
+                                    <p class="text-xs text-slate-500">9:00 صباحاً • سحبة واحدة</p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer" onchange="showToast('🔔', 'تم تحديث منبه الجرعة الصباحية')">
+                                <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-[-20px] after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-azBurgundy"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-slate-50 rounded-2xl border border-slate-200/70">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">🌙</span>
+                                <div>
+                                    <p class="text-sm font-bold text-slate-900">الجرعة المسائية</p>
+                                    <p class="text-xs text-slate-500">9:00 مساءً • سحبة واحدة</p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer" onchange="showToast('🔔', 'تم تحديث منبه الجرعة المسائية')">
+                                <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-[-20px] after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-azBurgundy"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-blue-50/60 rounded-2xl border border-blue-100">
+                            <div class="flex items-center gap-3">
+                                <span class="text-2xl">💧</span>
+                                <div>
+                                    <p class="text-sm font-bold text-slate-900">تذكير المضمضة التلقائي</p>
+                                    <p class="text-xs text-slate-500">تنبيه فوري بعد تسجيل كل جرعة</p>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="rinse-toggle" checked class="sr-only peer">
+                                <div class="w-11 h-6 bg-slate-200 rounded-full peer peer-checked:after:translate-x-[-20px] after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-azNavy"></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- سجل آخر الجرعات المسجلة -->
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase mb-2.5">سجل الجرعات الأخيرة اليوم</h4>
+                        <div id="dose-history-list" class="space-y-2 max-h-36 overflow-y-auto no-scrollbar">
+                            <div class="flex items-center justify-between text-xs bg-slate-50 px-3.5 py-2.5 rounded-xl border border-slate-100">
+                                <span class="font-semibold text-slate-700">✓ جرعة وقائية صباحية</span>
+                                <span class="text-slate-400">09:05 ص</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==================== تذييل رسمي للشاشات الكبيرة ==================== -->
+    <footer class="hidden md:block w-full bg-white border-t border-slate-200/80 py-4 text-center text-xs text-slate-500">
+        SymbiBridge AI • مبادرة التثقيف الطبي الرقمي لمرضى الربو • AstraZeneca Medical Affairs
+    </footer>
+
+    <!-- ==================== شريط التنقل السفلي للهواتف والآيباد المصغر ==================== -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 px-2 py-2 flex items-center justify-around z-30 shadow-lg">
+        <button onclick="switchTab('home')" id="mob-nav-home" class="mob-nav-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-azBurgundy font-bold">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="text-[11px]">الرئيسية</span>
+        </button>
+
+        <button onclick="switchTab('guide')" id="mob-nav-guide" class="mob-nav-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 font-medium">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+            <span class="text-[11px]">الاستخدام</span>
+        </button>
+
+        <button onclick="switchTab('chat')" id="mob-nav-chat" class="mob-nav-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 font-medium">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+            <span class="text-[11px]">المساعد AI</span>
+        </button>
+
+        <button onclick="switchTab('tracker')" id="mob-nav-tracker" class="mob-nav-btn flex flex-col items-center gap-1 py-1 px-3 rounded-xl text-slate-400 font-medium">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+            <span class="text-[11px]">جرعاتي</span>
+        </button>
+    </nav>
+
+    <!-- ==================== إشعار منبثق رسمي (Toast Notification) ==================== -->
+    <div id="toast-box" class="pointer-events-none opacity-0 translate-y-4 transition-all duration-300 fixed bottom-20 md:bottom-8 left-4 right-4 md:left-auto md:right-8 md:w-96 bg-slate-900 text-white text-xs sm:text-sm p-4 rounded-2xl shadow-2xl border border-slate-700 flex items-center gap-3 z-50">
+        <span id="toast-icon" class="text-xl shrink-0">💧</span>
+        <p id="toast-text" class="leading-relaxed font-medium">تم تسجيل الجرعة بنجاح! لا تنسَ المضمضة بالماء.</p>
+    </div>
+
+    <script>
+        // ==================== 1. الحالة العامة والتبديل اللغوي ====================
+        let currentDialect = 'iraqi';
+        let remainingDoses = 105;
+        const maxDoses = 120;
+        let currentStepIndex = 0;
+        const completedSteps = [false, false, false, false, false];
+
+        function toggleDialect() {
+            currentDialect = currentDialect === 'iraqi' ? 'msa' : 'iraqi';
+            const label = document.getElementById('dialect-label');
+            const greetingSub = document.getElementById('greeting-subtitle');
+            const homeClickDesc = document.getElementById('home-click-desc');
+            const homeAiDesc = document.getElementById('home-ai-desc');
+            const guideTip = document.getElementById('guide-golden-tip');
+
+            if (currentDialect === 'iraqi') {
+                label.textContent = 'أسلوب عراقي مبسط';
+                greetingSub.innerHTML = 'رفيقك الذكي للتحكم بالربو واستخدام بخاخ <strong>سيمبيكورت تربوهيلر</strong> بأمان ودقة، حتى تتنفس براحة وتعيش يومك بشكل طبيعي.';
+                homeClickDesc.innerHTML = 'من تفر القاعدة الحمراء لليمين وبعدين لليسار راح تسمع صوت طكة واضحة. <strong>إذا ما حسيت بطعم البودرة فهذا شي طبيعي جداً</strong> لأن الجرعة دقيقة جداً.';
+                homeAiDesc.textContent = 'عندك سؤال عن الكورتيزون، الإدمان، نسيان الجرعة، أو خطة SMART؟ اسأل المساعد العلمي وراح يجاوبك فوراً بكل وضوح.';
+                guideTip.textContent = 'لا ترجّ البخاخ قبل الاستخدام، ولا تنفخ أبد داخل الفوهة لأن رطوبة النفس تسبب تكتل البودرة الجافة وتمنع خروج الجرعة بشكل صحيح.';
+                showToast('🇮🇶', 'تم التبديل إلى الأسلوب العراقي المبسط والودود');
+            } else {
+                label.textContent = 'العربية الرسمية';
+                greetingSub.innerHTML = 'رفيقك الذكي للتحكم بالربو واستخدام بخاخ <strong>سيمبيكورت تربوهيلر</strong> بأمان ودقة، لضمان تنفس مريح وحياة طبيعية كل يوم.';
+                homeClickDesc.innerHTML = 'عند تدوير القاعدة الحمراء يميناً ثم يساراً ستسمع صوت نقرة ميكانيكية واضحة. <strong>عدم شعورك بطعم البودرة أمر طبيعي تماماً</strong> لأن الجرعة دقيقة جداً.';
+                homeAiDesc.textContent = 'هل لديك استفسار حول الكورتيزون الموضعي، الإدمان، نسيان الجرعة، أو خطة SMART؟ اسأل المساعد العلمي المعتمد واحصل على إجابة فورية ومطمئنة.';
+                guideTip.textContent = 'لا تقم بهزّ البخاخ قبل الاستخدام، ولا تنفخ أبداً داخل الفوهة لأن رطوبة النفس تسبب تكتل البودرة الجافة وتمنع خروج الجرعة بشكل سليم.';
+                showToast('🌐', 'تم التبديل إلى اللغة العربية الرسمية');
+            }
+            renderStep();
+        }
+
+        // ==================== 2. التنقل بين الأقسام (Responsive Tabs) ====================
+        function switchTab(tabName) {
+            const tabs = ['home', 'guide', 'chat', 'tracker'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+
+                // تحديث أزرار الشريط العلوي (Desktop)
+                const topBtn = document.getElementById(`top-nav-${t}`);
+                if (topBtn) {
+                    topBtn.classList.remove('bg-white', 'text-azBurgundy', 'font-bold', 'shadow-sm');
+                    topBtn.classList.add('text-pink-100', 'font-semibold');
+                }
+
+                // تحديث أزرار الشريط السفلي (Mobile)
+                const mobBtn = document.getElementById(`mob-nav-${t}`);
+                if (mobBtn) {
+                    mobBtn.classList.remove('text-azBurgundy', 'font-bold');
+                    mobBtn.classList.add('text-slate-400', 'font-medium');
+                }
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+
+            const activeTop = document.getElementById(`top-nav-${tabName}`);
+            if (activeTop) {
+                activeTop.classList.remove('text-pink-100', 'font-semibold');
+                activeTop.classList.add('bg-white', 'text-azBurgundy', 'font-bold', 'shadow-sm');
+            }
+
+            const activeMob = document.getElementById(`mob-nav-${tabName}`);
+            if (activeMob) {
+                activeMob.classList.remove('text-slate-400', 'font-medium');
+                activeMob.classList.add('text-azBurgundy', 'font-bold');
+            }
+
+            if (tabName === 'guide') renderStep();
+        }
+
+        // ==================== 3. محاكاة صوت الطكة الميكانيكية (Web Audio API) ====================
+        function playTurbuhalerClick() {
+            const waveBox = document.getElementById('sound-wave-box');
+            const waveText = document.getElementById('wave-status-text');
+
+            if (waveBox) {
+                waveBox.classList.add('wave-active');
+                waveText.textContent = 'جاري تشغيل الصوت...';
+                setTimeout(() => {
+                    waveBox.classList.remove('wave-active');
+                    waveText.textContent = 'تم سماع الطكة ✓';
+                }, 900);
+            }
+
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioContext();
+                const now = ctx.currentTime;
+
+                // نقرة ميكانيكية مزدوجة واقعية تحاكي تدوير قاعدة التربوهيلر
+                [0, 0.14].forEach((offset, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(idx === 0 ? 850 : 1100, now + offset);
+                    osc.frequency.exponentialRampToValueAtTime(160, now + offset + 0.045);
+
+                    gain.gain.setValueAtTime(0.85, now + offset);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + offset + 0.045);
+
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now + offset);
+                    osc.stop(now + offset + 0.05);
+                });
+
+                showToast('🔊', 'هذا هو صوت "الطكة" الصحيح! الآن الجرعة محمّلة وجاهزة للاستنشاق.');
+            } catch (e) {
+                showToast('🔊', 'تم تشغيل صوت الطكة الميكانيكية (Click)!');
+            }
+        }
+
+        // ==================== 4. دليل الخطوات الخمس التفاعلي ====================
+        const guideSteps = [
+            {
+                titleIraqi: '1. افتح الغطاء الأبيض',
+                titleMsa: '1. افتح الغطاء الأبيض',
+                descIraqi: 'فرّ الغطاء الأبيض الخارجي وارفعه ليفوك حتى تبين عندك فوهة البخاخ.',
+                descMsa: 'أدر الغطاء الأبيض الخارجي وارفعه للأعلى لتظهر فوهة البخاخ.',
+                svg: `<svg viewBox="0 0 120 140" class="w-full h-full">
+                        <rect x="42" y="8" width="36" height="32" rx="6" fill="#F8FAFC" stroke="#94A3B8" stroke-width="2" stroke-dasharray="3 2"/>
+                        <path d="M60 46 L60 36 M55 40 L60 35 L65 40" stroke="#830051" stroke-width="2.5" stroke-linecap="round"/>
+                        <rect x="44" y="54" width="32" height="58" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+                        <path d="M48 54 L51 46 L69 46 L72 54 Z" fill="#E2E8F0"/>
+                        <rect x="42" y="112" width="36" height="16" rx="4" fill="#D32F2F"/>
+                      </svg>`,
+                hasClickBtn: false
+            },
+            {
+                titleIraqi: '2. أدر القاعدة الحمراء حتى تسمع "طكة"',
+                titleMsa: '2. أدر القاعدة الحمراء حتى تسمع "طكة"',
+                descIraqi: 'الزم البخاخ بشكل عمودي، فرّ القاعدة الحمراء لليمين للآخر وبعدين رجّعها لليسار حتى تسمع صوت "طكة".',
+                descMsa: 'أمسك البخاخ عمودياً، أدر القاعدة الحمراء يميناً ثم يساراً حتى تسمع صوت نقرة واضحة.',
+                svg: `<svg viewBox="0 0 120 140" class="w-full h-full">
+                        <rect x="44" y="24" width="32" height="75" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+                        <path d="M48 24 L51 15 L69 15 L72 24 Z" fill="#E2E8F0"/>
+                        <rect x="53" y="55" width="14" height="10" rx="2" fill="#E2E8F0"/>
+                        <text x="60" y="62" font-size="6" text-anchor="middle" fill="#0F172A" font-weight="bold">105</text>
+                        <rect x="42" y="99" width="36" height="18" rx="4" fill="#D32F2F"/>
+                        <path d="M25 108 C25 100, 36 100, 36 108" fill="none" stroke="#830051" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M95 108 C95 100, 84 100, 84 108" fill="none" stroke="#830051" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="60" y="132" font-size="11" text-anchor="middle" fill="#830051" font-weight="bold">CLICK! طكة</text>
+                      </svg>`,
+                hasClickBtn: true
+            },
+            {
+                titleIraqi: '3. أخرج الهواء بعيداً عن البخاخ',
+                titleMsa: '3. أخرج الزفير بعيداً عن البخاخ',
+                descIraqi: 'فرّغ رئتك من الهواء بهدوء بعيد عن البخاخ. انتبه لا تنفخ أبد داخل فوهة البخاخ!',
+                descMsa: 'أخرج الهواء من رئتيك بهدوء بعيداً عن البخاخ. تجنب النفخ داخل الفوهة تماماً.',
+                svg: `<svg viewBox="0 0 120 140" class="w-full h-full">
+                        <rect x="30" y="30" width="28" height="70" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+                        <rect x="28" y="100" width="32" height="16" rx="4" fill="#D32F2F"/>
+                        <path d="M72 45 Q88 40 98 48" fill="none" stroke="#002D72" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M72 55 Q90 52 102 60" fill="none" stroke="#002D72" stroke-width="2.5" stroke-linecap="round"/>
+                        <text x="85" y="78" font-size="9" text-anchor="middle" fill="#002D72" font-weight="bold">زفير للخارج</text>
+                      </svg>`,
+                hasClickBtn: false
+            },
+            {
+                titleIraqi: '4. اسحب نفساً عميقاً وسريعاً',
+                titleMsa: '4. استنشق بعمق وبسرعة',
+                descIraqi: 'خلي الفوهة بين أسنانك وأطبق شفايفك عليها، واسحب نفس عميق وقوي. لا تقلق إذا ما حسيت بطعم البودرة.',
+                descMsa: 'ضع الفوهة بين أسنانك وأطبق شفتيك حولها، ثم استنشق بعمق وبسرعة. عدم الشعور بطعم أمر طبيعي.',
+                svg: `<svg viewBox="0 0 120 140" class="w-full h-full">
+                        <rect x="44" y="38" width="32" height="68" rx="5" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+                        <path d="M48 38 L51 28 L69 28 L72 38 Z" fill="#E2E8F0"/>
+                        <rect x="42" y="106" width="36" height="16" rx="4" fill="#D32F2F"/>
+                        <path d="M60 24 L60 8 M54 14 L60 8 L66 14" fill="none" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
+                        <text x="60" y="135" font-size="9" text-anchor="middle" fill="#059669" font-weight="bold">سحب عميق وسريع</text>
+                      </svg>`,
+                hasClickBtn: false
+            },
+            {
+                titleIraqi: '5. تمضمض بالماء جيداً',
+                titleMsa: '5. تمضمض بالماء جيداً',
+                descIraqi: 'أغلق الغطاء، وتمضمض بالماء وابصقه (لا تبلعه) حتى تحمي فمك من أي فطريات أو بحة بالصوت.',
+                descMsa: 'أغلق الغطاء، ثم تمضمض بالماء وابصقه للوقاية من فطريات الفم وبحة الصوت.',
+                svg: `<svg viewBox="0 0 120 140" class="w-full h-full">
+                        <path d="M40 40 L46 105 L74 105 L80 40 Z" fill="#E0F2FE" stroke="#0284C7" stroke-width="2.5"/>
+                        <path d="M43 65 Q60 60 77 65 L74 105 L46 105 Z" fill="#38BDF8" opacity="0.6"/>
+                        <circle cx="55" cy="52" r="3" fill="#0284C7"/>
+                        <circle cx="66" cy="46" r="2" fill="#0284C7"/>
+                        <text x="60" y="125" font-size="10" text-anchor="middle" fill="#0369A1" font-weight="bold">مضمضة وبصق الماء</text>
+                      </svg>`,
+                hasClickBtn: false
+            }
+        ];
+
+        function renderStep() {
+            const step = guideSteps[currentStepIndex];
+            document.getElementById('step-indicator').textContent = `خطوة ${currentStepIndex + 1} من ${guideSteps.length}`;
+            document.getElementById('step-illustration').innerHTML = step.svg;
+            document.getElementById('step-title').textContent = currentDialect === 'iraqi' ? step.titleIraqi : step.titleMsa;
+            document.getElementById('step-desc').textContent = currentDialect === 'iraqi' ? step.descIraqi : step.descMsa;
+            document.getElementById('step-check').checked = completedSteps[currentStepIndex];
+
+            const actionArea = document.getElementById('step-action-area');
+            if (step.hasClickBtn) {
+                actionArea.innerHTML = `
+                    <button onclick="playTurbuhalerClick()" class="inline-flex items-center gap-2 bg-azBurgundy hover:bg-azBurgundyDark active:scale-95 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-xl shadow-xs transition">
+                        <span>🔊</span>
+                        <span>اسمع صوت "الطكة" الآن</span>
+                    </button>`;
+            } else {
+                actionArea.innerHTML = '';
+            }
+
+            const dots = document.querySelectorAll('.step-dot');
+            dots.forEach((dot, idx) => {
+                if (idx === currentStepIndex) {
+                    dot.className = 'step-dot h-2.5 rounded-full bg-azBurgundy transition-all';
+                } else if (completedSteps[idx]) {
+                    dot.className = 'step-dot h-2.5 rounded-full bg-emerald-500 transition-all';
+                } else {
+                    dot.className = 'step-dot h-2.5 rounded-full bg-slate-200 transition-all';
+                }
+            });
+
+            document.getElementById('btn-prev-step').disabled = currentStepIndex === 0;
+            document.getElementById('btn-next-step').textContent = currentStepIndex === guideSteps.length - 1 ? 'إعادة من البداية ↻' : 'الخطوة التالية ←';
+        }
+
+        function toggleStepCheck(isChecked) {
+            completedSteps[currentStepIndex] = isChecked;
+            renderStep();
+            if (isChecked) {
+                showToast('✅', `أحسنت يا صديقي! تم تأكيد الخطوة ${currentStepIndex + 1}.`);
+            }
+        }
+
+        function nextStep() {
+            currentStepIndex = currentStepIndex < guideSteps.length - 1 ? currentStepIndex + 1 : 0;
+            renderStep();
+        }
+
+        function prevStep() {
+            if (currentStepIndex > 0) {
+                currentStepIndex--;
+                renderStep();
+            }
+        }
+
+        function goToStep(index) {
+            currentStepIndex = index;
+            renderStep();
+        }
+
+        // ==================== 5. مراقب الجرعات (Smart Dose Tracker) ====================
+        function updateDoseUI() {
+            document.getElementById('home-dose-count').textContent = remainingDoses;
+            document.getElementById('tracker-count').textContent = remainingDoses;
+
+            const percentage = (remainingDoses / maxDoses) * 100;
+            const ring = document.getElementById('tracker-ring');
+            const badge = document.getElementById('tracker-badge');
+
+            const offset = 264 - (264 * percentage) / 100;
+            ring.style.strokeDashoffset = offset;
+
+            if (remainingDoses <= 20) {
+                ring.setAttribute('stroke', '#D32F2F');
+                badge.textContent = '⚠️ المنطقة الحمراء - اطلب عبوة جديدة';
+                badge.className = 'text-xs font-bold px-3 py-1 rounded-full bg-red-50 text-turbuhalerRed border border-red-200 animate-pulse';
+            } else {
+                ring.setAttribute('stroke', '#10B981');
+                badge.textContent = 'العبوة بحالة ممتازة';
+                badge.className = 'text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200';
+            }
+        }
+
+        function logDose(isSmartReliever = false) {
+            if (remainingDoses > 0) {
+                remainingDoses--;
+                updateDoseUI();
+
+                // إضافة للسجل اليومي
+                const historyList = document.getElementById('dose-history-list');
+                const nowStr = new Date().toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' });
+                const entry = document.createElement('div');
+                entry.className = 'flex items-center justify-between text-xs bg-pink-50/70 px-3.5 py-2.5 rounded-xl border border-pink-100';
+                entry.innerHTML = `
+                    <span class="font-semibold text-azBurgundy">${isSmartReliever ? '✓ جرعة إسعافية (SMART)' : '✓ جرعة وقائية منتظمة'}</span>
+                    <span class="text-slate-500">${nowStr}</span>
+                `;
+                historyList.prepend(entry);
+
+                const rinseOn = document.getElementById('rinse-toggle').checked;
+                if (remainingDoses <= 20) {
+                    showToast('⚠️', `تنبيه يا صديقي: تبقى ${remainingDoses} جرعة فقط! يرجى تجهيز عبوة سيمبيكورت جديدة قريباً.`);
+                } else if (rinseOn) {
+                    showToast('💧', 'تم تسجيل الجرعة! تذكير لطيف: لا تنسَ المضمضة بالماء وبصقه.');
+                } else {
+                    showToast('✅', 'تم تسجيل الجرعة بنجاح.');
+                }
+            } else {
+                showToast('🚨', 'انتهت جرعات العبوة الحالية! يرجى استبدالها بعبوة جديدة.');
+            }
+        }
+
+        function simulateLowDoses() {
+            remainingDoses = 18;
+            updateDoseUI();
+            showToast('🔴', 'تمت محاكاة وصول العداد للمنطقة الحمراء (18 جرعة متبقية).');
+        }
+
+        function resetDoses() {
+            remainingDoses = 120;
+            updateDoseUI();
+            showToast('🔄', 'تمت إعادة ضبط العداد إلى عبوة جديدة (120 جرعة).');
+        }
+
+        // ==================== 6. المساعد الطبي الذكي (Gemini AI Integration) ====================
+        const presetAnswers = {
+            'هل بخاخ سيمبيكورت يسبب الإدمان؟': 'أبداً يا صديقي، بخاخ <strong>سيمبيكورت</strong> لا يسبب أي نوع من الإدمان أو التعود. الربو مرض مزمن يحتاج عناية مستمرة، والالتزام بالبخاخ يحمي شعبك الهوائية من الالتهاب ويمنع نوبات ضيق التنفس المفاجئة.',
+            'هل الكورتيزون بالبخاخ يزيد الوزن؟': 'لا يسبب زيادة الوزن أبداً! الكورتيزون الموجود في البخاخ (Budesonide) يُقاس بالميكروغرام (كمية دقيقة جداً) ويصل مباشرة إلى الرئة فقط، ولا يدخل إلى مجرى الدم بكميات تسبب السمنة أو احتباس السوائل مثل حبوب أو إبر الكورتيزون.',
+            'ما أحس بطعم الدواء بحلقي، هل البخاخ يشتغل؟': 'نعم يشتغل بكفاءة عالية! تقنية <strong>التربوهيلر (Turbuhaler)</strong> تعطي بودرة جافة نقية بدون غازات دافعة أو مواد حافظة، لذلك لا تشعر بطعم أو رذاذ بارد. طالما سمعت صوت <strong>"الطكة"</strong> واستنشقت بعمق، فالجرعة وصلت إلى رئتيك بالكامل.',
+            'شنو فائدة المضمضة بعد البخاخ؟': 'المضمضة بالماء وبصقه بعد الجرعة تزيل أي بقايا مجهرية من الدواء قد تبقى في الفم أو الحلق، وهذا يحميك تماماً من حدوث فطريات الفم (الطبقة البيضاء) أو بحة الصوت.',
+            'نسيت آخذ جرعتي، شسوي؟': 'إذا تذكرتها خلال وقت قريب، خذها فوراً وبعدها تمضمض بالماء. أما إذا اقترب موعد الجرعة التالية، فـ <strong>لا تضاعف الجرعة</strong>؛ خذ جرعتك الاعتيادية فقط واستمر على جدولك.'
+        };
+
+        function openChatWithQuestion(question) {
+            switchTab('chat');
+            askPresetQuestion(question);
+        }
+
+        function askPresetQuestion(question) {
+            appendUserMessage(question);
+            const typingId = showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator(typingId);
+                if (presetAnswers[question]) {
+                    appendAIMessage(presetAnswers[question]);
+                } else {
+                    callGeminiAI(question);
+                }
+            }, 600);
+        }
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            appendUserMessage(text);
+
+            if (presetAnswers[text]) {
+                const typingId = showTypingIndicator();
+                setTimeout(() => {
+                    removeTypingIndicator(typingId);
+                    appendAIMessage(presetAnswers[text]);
+                }, 550);
+                return;
+            }
+
+            await callGeminiAI(text);
+        }
+
+        async function callGeminiAI(userPrompt) {
+            const typingId = showTypingIndicator();
+            const apiKey = ""; // يتم حقنه تلقائياً في بيئة التشغيل
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            const systemPrompt = `أنت مساعد تثقيف طبي رسمي ومعتمد من شركة أسترازينيكا (AstraZeneca) مخصص لمرضى الربو والانسداد الرئوي الذين يستخدمون بخاخ Symbicort Turbuhaler (budesonide/formoterol).
+            - خاطب المستخدم بود واحترام (مثل: يا صديقي) وبلهجة عربية واضحة ومطمئنة قريبة للمريض العراقي مع الحفاظ على الطابع العلمي الرسمي.
+            - اشرح بوضوح ودقة علمية: طريقة الاستخدام الصحيحة (تدوير القاعدة الحمراء يميناً ويساراً حتى سماع الطكة، عدم النفخ داخل البخاخ، الاستنشاق العميق، والمضمضة بالماء).
+            - طمئن المريض بأن الكورتيزون المستنشق موضعي ولا يسبب السمنة أو الإدمان، وأن عدم الإحساس بطعم البودرة طبيعي جداً.
+            - اشرح نظام SMART Therapy ببساطة عند الحاجة.
+            - اجعل الإجابة مركزة ومرتبة في 3 إلى 4 أسطر، وذكّر المريض دائماً بمراجعة طبيبه المعالج في الحالات الطارئة أو قبل تعديل الجرعات.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            const delays = [1000, 2000, 4000];
+            for (let attempt = 0; attempt <= delays.length; attempt++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error('API Error');
+
+                    const result = await response.json();
+                    const reply = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    removeTypingIndicator(typingId);
+                    if (reply) {
+                        const formatted = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                        appendAIMessage(formatted);
+                    } else {
+                        appendAIMessage('عذراً يا صديقي، لم أتمكن من معالجة سؤالك حالياً. يرجى المحاولة مرة أخرى أو استشارة طبيبك المختص.');
+                    }
+                    return;
+                } catch (err) {
+                    if (attempt < delays.length) {
+                        await new Promise(res => setTimeout(res, delays[attempt]));
+                    } else {
+                        removeTypingIndicator(typingId);
+                        appendAIMessage('سؤال مهم يا صديقي! تذكر دائماً الالتزام بجرعات <strong>سيمبيكورت</strong> الموصوفة لك من قبل طبيبك، والمضمضة بالماء بعد كل استخدام. وفي حال وجود ضيق تنفس شديد، يرجى مراجعة الطبيب أو الطوارئ فوراً.');
+                    }
+                }
+            }
+        }
+
+        function appendUserMessage(text) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'flex items-start justify-end gap-2.5';
+            div.innerHTML = `
+                <div class="bg-azBurgundy text-white rounded-2xl rounded-tl-none p-3.5 text-xs sm:text-sm leading-relaxed shadow-xs max-w-[82%]">
+                    ${escapeHTML(text)}
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function appendAIMessage(htmlContent) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-3';
+            div.innerHTML = `
+                <div class="w-9 h-9 rounded-full bg-azBurgundy text-white flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                <div class="bg-white border border-slate-200/90 rounded-2xl rounded-tr-none p-4 text-xs sm:text-sm text-slate-700 leading-relaxed shadow-xs max-w-[85%]">
+                    ${htmlContent}
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const id = 'typing-' + Date.now();
+            const div = document.createElement('div');
+            div.id = id;
+            div.className = 'flex items-start gap-3';
+            div.innerHTML = `
+                <div class="w-9 h-9 rounded-full bg-azBurgundy text-white flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                <div class="bg-white border border-slate-200/90 rounded-2xl rounded-tr-none px-4 py-3.5 shadow-xs flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></span>
+                    <span class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></span>
+                    <span class="w-2 h-2 bg-slate-400 rounded-full typing-dot"></span>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+            return id;
+        }
+
+        function removeTypingIndicator(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function clearChat() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <div class="w-9 h-9 rounded-full bg-azBurgundy text-white flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                    <div class="bg-white border border-slate-200/90 rounded-2xl rounded-tr-none p-4 text-xs sm:text-sm text-slate-700 leading-relaxed shadow-xs max-w-[85%]">
+                        تم مسح المحادثة. أهلاً بك مجدداً يا صديقي، كيف يمكنني مساعدتك بخصوص بخاخ <strong>سيمبيكورت</strong>؟
+                    </div>
+                </div>
+            `;
+        }
+
+        // ==================== 7. أدوات مساعدة ====================
+        let toastTimeout;
+        function showToast(icon, message) {
+            const box = document.getElementById('toast-box');
+            document.getElementById('toast-icon').textContent = icon;
+            document.getElementById('toast-text').textContent = message;
+
+            box.classList.remove('opacity-0', 'translate-y-4');
+            box.classList.add('opacity-100', 'translate-y-0');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                box.classList.remove('opacity-100', 'translate-y-0');
+                box.classList.add('opacity-0', 'translate-y-4');
+            }, 3500);
+        }
+
+        function escapeHTML(str) {
+            const p = document.createElement('p');
+            p.textContent = str;
+            return p.innerHTML;
+        }
+
+        window.onload = function() {
+            renderStep();
+            updateDoseUI();
+        };
+    </script>
+</body>
+</html>
